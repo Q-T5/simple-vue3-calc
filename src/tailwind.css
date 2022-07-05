@@ -1,0 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.calc-buttons { 
+    @apply daisyui-btn text-2xl no-animation active:bg-primary-focus;
+}
