@@ -12,16 +12,12 @@
       <button class="calc-buttons" @click="number(7)">7</button>
       <button class="calc-buttons" @click="number(8)">8</button>
       <button class="calc-buttons" @click="number(9)">9</button>
-      <button class="calc-buttons" @click="calculate">=</button>
+      <button class="calc-buttons" @click="calculate(), $emit('addToHistory', historyBuffer)">=</button>
       <button class="calc-buttons" @click="sign('+')">+</button>
       <button class="calc-buttons" @click="sign('-')">-</button>
       <button class="calc-buttons" @click="sign('/')">/</button>
       <button class="calc-buttons" @click="sign('*')">*</button>
-      <button class="calc-buttons col-span-3" @click="clearQuery()">C</button>
-    </div>
-
-    <div>
-      Hello World B
+      <button class="calc-buttons col-span-3" @click="clearQuery">C</button>
     </div>
   </div>
 </template>
@@ -29,12 +25,14 @@
 <script>
   export default {
     "name": "MyCalculator",
+    "emits": ["addToHistory"],
     data() {
       return {
         "query": "0",
         "previous": "",
         "operator": "",
-        "result": ""
+        "result": "",
+        "historyBuffer": [],
       }
     },
     "methods": {
@@ -54,11 +52,17 @@
         this.previous = this.query;
         this.operator = operator;
         this.query = "0";
-
-        console.log(this.previous, this.operator, this.querry);
       },
 
       calculate() {
+        const calculation = {
+          "query": this.query,
+          "previous": this.previous,
+          "operator": this.operator
+        }
+
+        this.historyBuffer.push(calculation);
+
         if(this.operator == "+") {
           this.add(this.query, this.previous);
         } else if(this.operator == "-") {
