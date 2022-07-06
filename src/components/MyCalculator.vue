@@ -27,7 +27,7 @@
   export default {
     "name": "MyCalculator",
     "emits": ["addToHistory"],
-    "props": ["anIndex"], 
+    "props": ["historyCalc"], 
     data() {
       return {
         "query": "0",
@@ -35,7 +35,7 @@
         "operator": "",
         "result": "",
         "historyBuffer": [],
-        "calculationToDisplay": this.anIndex
+        "calculationToDisplay": this.historyCalc
       }
     },
     "methods": {
@@ -95,8 +95,12 @@
     },
     "watch": {
       calculationToDisplay() {
-        if(this.calculationToDisplay != null) {
-          console.log("Value is not null");
+        if(this.calculationToDisplay !== null) {
+          this.query = this.historyBuffer[this.calculationToDisplay].query;
+          this.previous = this.historyBuffer[this.calculationToDisplay].previous;
+          this.operator = this.historyBuffer[this.calculationToDisplay].operator;
+
+          this.calculate();
         }
       }
     }
