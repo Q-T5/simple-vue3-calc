@@ -1,6 +1,5 @@
 <template>
   <div class="p-10 flex flex-col items-center justify-center md:flex-row">
-    <h1> {{ calculationToDisplay }}</h1>
     <div class="w-80 grid grid-cols-3 space-x-3 space-y-3 border-2 rounded-md border-gray-500 px-4 py-4">
       <div class="bg-gray-300 col-span-3 py-2 text-2xl rounded-md text-end" v-text="query"></div>
       <button class="calc-buttons" @click="number(0)">0</button>
@@ -35,7 +34,6 @@
         "operator": "",
         "result": "",
         "historyBuffer": [],
-        "calculationToDisplay": this.historyCalc
       }
     },
     "methods": {
@@ -94,14 +92,14 @@
       }
     },
     "watch": {
-      calculationToDisplay() {
-        if(this.calculationToDisplay !== null) {
-          this.query = this.historyBuffer[this.calculationToDisplay].query;
-          this.previous = this.historyBuffer[this.calculationToDisplay].previous;
-          this.operator = this.historyBuffer[this.calculationToDisplay].operator;
-
-          this.calculate();
+      historyCalc() {
+        if(this.historyCalc != null) {
+          this.query = this.historyBuffer[this.historyCalc].query;
+          this.previous = this.historyBuffer[this.historyCalc].previous;
+          this.operator = this.historyBuffer[this.historyCalc].operator;
         }
+
+        this.calculate();
       }
     }
   }
