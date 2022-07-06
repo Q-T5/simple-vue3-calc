@@ -2,10 +2,10 @@
   <div class="shadow-lg py-4 text-center text-2xl underline">
     Simple Calculator with History
   </div>
-  <my-calculator @addToHistory="updateHistory" />
+  <my-calculator @addToHistory="updateHistory" :anIndex="indexToDisplay" />
   <h3 class="flex justify-center text-2xl underline pb-2 uppercase">History</h3>
-  <div v-for="calc in pastCalculations" :key="calc" class="flex justify-center space-y-5">
-      <div class="border-2 text-2xl mt-2 rounded-lg border-black w-32 text-center hover:border-green-400">
+  <div v-for="(calc, index) in pastCalculations" :key="calc.previous" class="flex justify-center space-y-5">
+      <div class="border-2 text-2xl mt-2 rounded-lg border-black w-32 text-center hover:border-green-400" @click="indexToDisplay = index, showResult()">
         <p>
           {{ calc.previous }}
           {{ calc.operator }}
@@ -25,14 +25,16 @@ import MyCalculator from './components/MyCalculator.vue'
     data() {
       return {
         "pastCalculations": [],
+        "indexToDisplay": null,
       }
     },
     methods: {
       updateHistory(historyBuffer) {
-        console.log("size of AppComp history buffer before: " + this.pastCalculations.length);
         this.pastCalculations = historyBuffer;
-        console.log("size of AppComp history buffer after: " + this.pastCalculations.length);
-        console.log(this.pastCalculations);
+      },
+
+      showResult() {
+        console.log("Index: " + this.indexToDisplay);
       }
     }
   }

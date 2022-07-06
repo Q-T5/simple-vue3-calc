@@ -1,7 +1,8 @@
 <template>
   <div class="p-10 flex flex-col items-center justify-center md:flex-row">
+    <h1> {{ calculationToDisplay }}</h1>
     <div class="w-80 grid grid-cols-3 space-x-3 space-y-3 border-2 rounded-md border-gray-500 px-4 py-4">
-      <div class="bg-slate-200 col-span-3 py-2 text-2xl rounded-md text-end" v-text="query"></div>
+      <div class="bg-gray-300 col-span-3 py-2 text-2xl rounded-md text-end" v-text="query"></div>
       <button class="calc-buttons" @click="number(0)">0</button>
       <button class="calc-buttons" @click="number(1)">1</button>
       <button class="calc-buttons" @click="number(2)">2</button>
@@ -26,6 +27,7 @@
   export default {
     "name": "MyCalculator",
     "emits": ["addToHistory"],
+    "props": ["anIndex"], 
     data() {
       return {
         "query": "0",
@@ -33,6 +35,7 @@
         "operator": "",
         "result": "",
         "historyBuffer": [],
+        "calculationToDisplay": this.anIndex
       }
     },
     "methods": {
@@ -75,19 +78,26 @@
       },
 
       add(num1, num2) {
-        this.query = Number(num1) + Number(num2);
+        this.query = (Number(num1) + Number(num2)).toString();
       },
 
       minus(num1, num2) {
-        this.query = Number(num2) - Number(num1);
+        this.query = (Number(num2) - Number(num1)).toString();
       },
 
       product(num1, num2) {
-        this.query = Number(num1) * Number(num2);
+        this.query = (Number(num1) * Number(num2)).toString();
       },
 
       divide(num1, num2) {
-        this.query = Number(num2) / Number(num1);
+        this.query = (Number(num2) / Number(num1)).toString();
+      }
+    },
+    "watch": {
+      calculationToDisplay() {
+        if(this.calculationToDisplay != null) {
+          console.log("Value is not null");
+        }
       }
     }
   }
