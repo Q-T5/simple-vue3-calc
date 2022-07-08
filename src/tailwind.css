@@ -3,5 +3,5 @@
 @tailwind utilities;
 
 .calc-buttons { 
-    @apply daisyui-btn text-2xl no-animation active:bg-primary-focus;
+    @apply daisyui-btn daisyui-btn-sm text-2xl no-animation active:bg-primary-focus lowercase;
 }

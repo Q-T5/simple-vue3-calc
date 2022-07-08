@@ -1,13 +1,15 @@
 <template>
   <div class="shadow-lg py-2 text-center text-2xl underline">
-    Simple Calculator with History
+    Simple Calculator
   </div>
 
   <div class="flex flex-col items-center md:flex-row md:justify-center md:items-start md:space-x-3 pt-2">
-    <my-calculator @addToHistory="updateHistory" @changeNotifMessage="showNotificationPopup" :historyCalc="previousCalc" @advMathBtnClicked="notifAdvMthBtnClicked" />
+    <my-calculator @addToHistory="updateHistory" @changeNotifMessage="showNotificationPopup" :historyCalc="previousCalc" @advMathBtnClicked="notifAdvMthBtnClicked" :dumpHistory="clearHistory" />
     <div class="pt-2 md:pt-0">
-      <h3 class="text-2xl underline pb-2 uppercase text-center">History</h3>
-      <div v-for="(calc, index) in pastCalculations" :key="calc.previous" class="">
+      <h3 class="text-2xl underline pb-2 uppercase text-center inline-flex">History
+        <button class="daisyui-btn daisyui-btn-sm ml-2 no-animation" @click="authClearHistory">CLEAR</button>
+      </h3>
+      <div v-for="(calc, index) in pastCalculations" :key="calc.previous">
         <div class="border-2 text-2xl mt-2 rounded-lg border-black w-32 text-center hover:border-green-400" @click="previousCalc = index,notifMessage = 'Showing Result for Clicked Calculation.', showNotification = true">
           <p>
             {{ calc.previous }}
@@ -38,7 +40,8 @@ import MyCalculator from './components/MyCalculator.vue'
         "previousCalc": null,
         "showNotification": false,
         "notifMessage": "",
-        "anyAdvMthBtnClicked": 0
+        "anyAdvMthBtnClicked": 0,
+        "clearHistory": false,
       }
     },
     methods: {
@@ -59,6 +62,21 @@ import MyCalculator from './components/MyCalculator.vue'
           this.showNotification = true;
         } else {
           this.anyAdvMthBtnClicked = 0;
+        }
+      },
+      authClearHistory() {
+        if(this.pastCalculations.length > 0) {
+          this.clearHistory = true;
+
+          this.notifMessage = "Cleared History."
+          this.showNotification = true;
+
+          setTimeout(() => {
+            this.clearHistory = false;
+          }, 2000);
+        } else {
+          this.notifMessage = "Nothing to Clear."
+          this.showNotification = true;
         }
       }
     },
