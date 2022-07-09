@@ -10,11 +10,11 @@
         <button class="daisyui-btn daisyui-btn-sm ml-2 no-animation" @click="authClearHistory">CLEAR</button>
       </h3>
       <div v-for="(calc, index) in pastCalculations" :key="calc.previous">
-        <div class="border-2 text-2xl mt-2 rounded-lg border-black w-32 text-center hover:border-green-400" @click="previousCalc = index,notifMessage = 'Showing Result for Clicked Calculation.', showNotification = true">
+        <div class="border-2 text-2xl mt-2 rounded-lg border-black w-32 text-center hover:border-gray-500" @click="previousCalc = index, notifMessage = 'Showing Result for Clicked Calculation.', showNotification = true">
           <p>
             {{ calc.previous }}
             {{ calc.operator }}
-            {{ calc.query }}
+            {{ calc.current }}
           </p>
         </div>
       </div>
