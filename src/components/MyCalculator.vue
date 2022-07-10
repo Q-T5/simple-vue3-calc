@@ -1,7 +1,10 @@
 <template>
   <div class="w-80 grid grid-cols-3 space-x-3 space-y-3 border-2 rounded-md border-gray-500 px-2 py-4">
-    <div class="daisyui-btn daisyui-btn-sm no-animation" @click="showAdvanced ? showAdvanced = false : showAdvanced = true, disableOperators ? disableOperators = false : disableOperators = false, showAdvancedButtonAlreadyClicked == 0 ? showAdvancedButtonAlreadyClicked = 1 : showAdvancedButtonAlreadyClicked = 0, $emit('changeNotifMessage', showAdvancedButtonAlreadyClicked)">
+    <div class="daisyui-btn-group col-span-2">
+      <div class="daisyui-btn daisyui-btn-sm no-animation" @click="showAdvanced ? showAdvanced = false : showAdvanced = true, disableOperators ? disableOperators = false : disableOperators = false, showAdvancedButtonAlreadyClicked == 0 ? showAdvancedButtonAlreadyClicked = 1 : showAdvancedButtonAlreadyClicked = 0, $emit('changeNotifMessage', showAdvancedButtonAlreadyClicked)">
         Advanced
+      </div>
+      <div class="daisyui-btn daisyui-btn-sm daisyui-btn-ghost no-animation" @click="$emit('showHistoryTab', 1)">History</div>
     </div>
     <div class="bg-gray-300 col-span-3 py-2 text-2xl rounded-md text-end text-black px-2" v-text="current"></div>
     <button class="calc-buttons" @click="number(0)">0</button>
@@ -31,7 +34,7 @@
 <script>
   export default {
     "name": "MyCalculator",
-    "emits": ["addToHistory", "changeNotifMessage", "advMathBtnClicked"],
+    "emits": ["addToHistory", "changeNotifMessage", "advMathBtnClicked", "showHistoryTab"],
     "props": ["historyCalc", "dumpHistory"],
     data() {
       return {

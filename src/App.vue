@@ -4,23 +4,28 @@
   </div>
 
   <div class="flex flex-col items-center md:flex-row md:justify-center md:items-start md:space-x-3 pt-2">
-    <my-calculator @addToHistory="updateHistory" @changeNotifMessage="showNotificationPopup" :historyCalc="previousCalc" @advMathBtnClicked="notifAdvMthBtnClicked" :dumpHistory="clearHistory" />
-    <div class="pt-2 md:pt-0">
-      <h3 class="text-2xl underline pb-2 uppercase text-center inline-flex">History
-        <button class="daisyui-btn daisyui-btn-sm ml-2 no-animation" @click="authClearHistory">CLEAR</button>
-      </h3>
-      <div v-for="(calc, index) in pastCalculations" :key="calc.previous">
-        <div class="border-2 text-2xl mt-2 rounded-lg border-black w-32 text-center hover:border-gray-500" @click="previousCalc = index, notifMessage = 'Showing Result for Clicked Calculation.', showNotification = true">
-          <p>
-            {{ calc.previous }}
-            {{ calc.operator }}
-            {{ calc.current }}
-          </p>
-        </div>
+    <!-- this is the calculator itself -->
+    <my-calculator @addToHistory="updateHistory" @changeNotifMessage="showNotificationPopup" :historyCalc="previousCalc" @advMathBtnClicked="notifAdvMthBtnClicked" :dumpHistory="clearHistory" @showHistoryTab="displayHistoryTab" />
+  </div>
+
+  <!-- this is the history section -->
+  <div class="pt-2 md:pt-0 fixed w-2/3 top-14 h-screen flex flex-col items-center backdrop-blur-md bg-gray-500/75 overflow-auto" v-show="showTheHistoryTab">
+    <h3 class="text-2xl underline pb-2 uppercase text-center inline-block">History
+      <button class="daisyui-btn daisyui-btn-xs ml-2 no-animation" @click="authClearHistory">CLEAR</button>
+      <button class="daisyui-btn daisyui-btn-xs daisyui-btn-ghost ml-1 no-animation" @click="displayHistoryTab(0)">CLOSE</button>
+    </h3>
+    <div v-for="(calc, index) in pastCalculations" :key="calc.previous">
+      <div class="border-2 text-2xl mt-2 rounded-lg border-black w-32 text-center hover:border-gray-500" @click="previousCalc = index, notifMessage = 'Showing Result for Clicked Calculation.', showNotification = true">
+        <p>
+          {{ calc.previous }}
+          {{ calc.operator }}
+          {{ calc.current }}
+        </p>
       </div>
     </div>
   </div>
 
+  <!-- this is the notification popup -->
   <div class="relative">
     <notification class="fixed md:left-[35%] bottom-2 left-2 daisyui-alert max-w-fit rounded-md border-l-8" v-show="showNotification" :message="notifMessage" />
   </div>
@@ -42,6 +47,7 @@ import MyCalculator from './components/MyCalculator.vue'
         "notifMessage": "",
         "anyAdvMthBtnClicked": 0,
         "clearHistory": false,
+        "showTheHistoryTab": false
       }
     },
     methods: {
@@ -77,6 +83,13 @@ import MyCalculator from './components/MyCalculator.vue'
         } else {
           this.notifMessage = "Nothing to Clear."
           this.showNotification = true;
+        }
+      },
+      displayHistoryTab(num) {
+        if(num === 1) {
+          this.showTheHistoryTab = true;
+        } else if(num === 0) {
+          this.showTheHistoryTab = false;
         }
       }
     },
