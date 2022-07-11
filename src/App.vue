@@ -9,7 +9,7 @@
   </div>
 
   <!-- this is the history section -->
-  <div class="p-3 fixed w-1/3 top-[49px] h-screen flex flex-col items-start backdrop-blur-md bg-gray-500/75 overflow-auto" v-show="showTheHistoryTab">
+  <div class="p-3 fixed w-2/3 top-[49px] h-screen flex flex-col items-start backdrop-blur-md bg-gray-500/75 overflow-auto" v-show="showTheHistoryTab">
     <h3 class="text-2xl underline pb-2 uppercase inline-block">History
       <button class="daisyui-btn daisyui-btn-xs ml-2 no-animation" @click="authClearHistory">CLEAR</button>
       <button class="daisyui-btn daisyui-btn-xs daisyui-btn-ghost ml-1 no-animation" @click="showTheHistoryTab = false">CLOSE</button>
